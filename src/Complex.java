@@ -1,3 +1,10 @@
+import java.util.ArrayList;
+
+/**
+ * @author Wojciech Lepich
+ * @version 1.0
+ *
+ */
 public class Complex implements Field<Complex> {
     private double r, i;
 
@@ -6,23 +13,26 @@ public class Complex implements Field<Complex> {
 
     public static void main(String[] args) {
         Complex zero = new Complex(0, 0);
-        Complex unoi = new Complex(0, 1);
+        Complex unoImaginary = new Complex(0, 1);
         Complex uno = new Complex(1, 0);
 
-        Complex c1 = new Complex(1, 1);
-        Complex c2 = new Complex(-1, 1);
-        Complex c3 = new Complex(-1, -1);
-        Complex c4 = new Complex(1, -1);
+        ArrayList<Complex> complexes = new ArrayList<>();
+        complexes.add(new Complex(1.1, 1.1));
+        complexes.add(new Complex(-1.2, 1.2));
+        complexes.add(new Complex(-1.3, -1.3));
+        complexes.add(new Complex(1.4, -1.4));
+        complexes.add(zero);
+        complexes.add(unoImaginary);
+        complexes.add(uno);
 
-        Complex z1 = new Complex(valueOf(c1.toString()));
-        Complex z2 = new Complex(valueOf(c2.toString()));
-        Complex z3 = new Complex(valueOf(c3.toString()));
-        Complex z4 = new Complex(valueOf(c4.toString()));
+        ArrayList<Complex> complexes1 = new ArrayList<>();
+        for (Complex c: complexes)
+            complexes1.add(new Complex(valueOf(c.toString())));
 
-//        System.out.println(c1 + " " + z1);
-//        System.out.println(c2 + " " + z2);
-//        System.out.println(c3 + " " + z3);
-//        System.out.println(c4 + " " + z4);
+        for (Complex c: complexes)
+            System.out.println(c);
+        for (Complex c: complexes1)
+            System.out.println(c);
     }
 
     public Complex() {
@@ -148,7 +158,7 @@ public class Complex implements Field<Complex> {
     @Override
     public String toString() {
 
-        if (this.i > 0)
+        if (this.i >= 0)
             return String.valueOf(this.r) + "+" + String.valueOf(this.i) + "i";
         return String.valueOf(this.r) + String.valueOf(this.i) + "i";
     }
@@ -157,28 +167,23 @@ public class Complex implements Field<Complex> {
 
     public static Complex valueOf(String s) {
 
-        double sigr = (s.indexOf('-') == 0) ? -1 : 1;
-        double sigi = 1;
+        // pozbycie się białych spacji z przodu i z tyłu
+        s = s.trim();
 
-        if
-            sigr = -1;
-        if (!(s.indexOf('-', 1) == -1))
-            sigi = -1;
+        // indeks znaku '+' lub '-' stojącego przy części urojonej
+        int beginOfImag = s.indexOf('-',1) * s.indexOf('+', 1) * (-1);
 
-        String[] values = s.split("[+/-]");
+        String real = s.substring(0, beginOfImag);
+        String imag = s.substring(beginOfImag, s.length()-1);
+        System.out.println("strReal:\t" + real);
+        System.out.println("strImag:\t" + imag);
 
-
-        System.out.println(s);
-        for (String str: values)
-            System.out.print(str + " ");
-        System.out.println();
-
-        return new Complex(r, i);
+        return new Complex(Double.valueOf(real), Double.valueOf(imag));
     }
 
     /* Zwraca liczbę zespolona o wartości podanej
         w argumencie w formacie "-1.23+4.56i" */
-//
+
     public void setRe(double r) {
         this.r = r;
     }
@@ -199,5 +204,4 @@ public class Complex implements Field<Complex> {
         this.i = i;
     }
     /* Przypisuje podaną wartość */
-
 }
