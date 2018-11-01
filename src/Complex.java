@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * @author Wojciech Lepich
  * @version 1.0
@@ -7,33 +5,6 @@ import java.util.ArrayList;
  */
 public class Complex implements Field<Complex> {
     private double r, i;
-
-    //TODO: użyć @Override w odpowiednich miejscach
-    //TODO: przetestować wszystkie funkcje
-
-    public static void main(String[] args) {
-        Complex zero = new Complex(0, 0);
-        Complex unoImaginary = new Complex(0, 1);
-        Complex uno = new Complex(1, 0);
-
-        ArrayList<Complex> complexes = new ArrayList<>();
-        complexes.add(new Complex(1.1, 1.1));
-        complexes.add(new Complex(-1.2, 1.2));
-        complexes.add(new Complex(-1.3, -1.3));
-        complexes.add(new Complex(1.4, -1.4));
-        complexes.add(zero);
-        complexes.add(unoImaginary);
-        complexes.add(uno);
-
-        ArrayList<Complex> complexes1 = new ArrayList<>();
-        for (Complex c: complexes)
-            complexes1.add(new Complex(valueOf(c.toString())));
-
-        for (Complex c: complexes)
-            System.out.println(c);
-        for (Complex c: complexes1)
-            System.out.println(c);
-    }
 
     public Complex() {
         this(0d);
@@ -118,11 +89,11 @@ public class Complex implements Field<Complex> {
     /* Metody statyczne dla powyższych operacji */
 
     public static Complex add(Complex a, Complex b) {
-        return new Complex(a.r + b.r, b.i + b.r);
+        return new Complex(a.r + b.r, a.i + b.i);
     }
 
     public static Complex sub(Complex a, Complex b) {
-        return new Complex(a.r - b.r, b.i - b.r);
+        return new Complex(a.r - b.r, a.i - b.i);
     }
 
     public static Complex mul(Complex a, Complex b) {
@@ -175,8 +146,6 @@ public class Complex implements Field<Complex> {
 
         String real = s.substring(0, beginOfImag);
         String imag = s.substring(beginOfImag, s.length()-1);
-        System.out.println("strReal:\t" + real);
-        System.out.println("strImag:\t" + imag);
 
         return new Complex(Double.valueOf(real), Double.valueOf(imag));
     }
