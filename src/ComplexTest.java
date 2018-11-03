@@ -1,6 +1,7 @@
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+
+import static org.junit.Assert.assertEquals;
 
 public class ComplexTest {
 
@@ -10,9 +11,9 @@ public class ComplexTest {
         Complex b = new Complex(5.6, -7.8);
         a.add(b);
         String result = a.toString();
-        String numerycznyBlad = String.valueOf(-1.2+5.6);
-        Assert.assertEquals(numerycznyBlad+"-4.4i", result);
-//        Assert.assertEquals("4.4+11.2i", result);
+        String numerycznyBlad = String.valueOf(-1.2 + 5.6);
+        assertEquals(numerycznyBlad + "-4.4i", result);
+//        assertEquals("4.4-4.4i", result);
 //        -1.2 + 5.6 == 4.3999999999999995, stąd test jest fałszywie negatywny
     }
 
@@ -31,7 +32,7 @@ public class ComplexTest {
         Complex b = Complex.valueOf("2+3i");
         a.div(b);
         String result = a.toString();
-        Assert.assertEquals("2.0+1.0i", result);
+        assertEquals("2.0+1.0i", result);
     }
 
     @Rule
@@ -47,18 +48,38 @@ public class ComplexTest {
     }
 
     @org.junit.Test
+    public void divStaticException() throws ArithmeticException {
+        Complex a = new Complex("0.23+11.2i");
+        Complex b = new Complex(0,0);
+        thrown.expect(ArithmeticException.class);
+        thrown.expectMessage("Dzielenie przez 0");
+        Complex c = Complex.div(a, b);
+    }
+
+    @org.junit.Test
     public void addStatic() {
         Complex a = new Complex("1.15-3.22i");
         Complex b = new Complex(-4.15, 2.32);
-        Complex c = Complex.add(a,b);
+        Complex c = Complex.add(a, b);
         String result = c.toString();
 //         ponownie błędy numeryczne
-        double bladRe = 1.15-4.15;
+        double bladRe = 1.15 - 4.15;
         double bladIm = -3.22 + 2.32;
-        String expected = String.valueOf(bladRe)+String.valueOf(bladIm)+"i";
-        Assert.assertEquals(expected, result);
+        String expected = String.valueOf(bladRe) + String.valueOf(bladIm) + "i";
+        assertEquals(expected, result);
 
-//        Assert.assertEquals("-3.0-0.9i", result);
+//        assertEquals("-3.0-0.9i", result);
+    }
+
+    @org.junit.Test
+    public void doesMulStaticChangesValue() {
+        Complex a = new Complex(1.1, 2.1);
+        Complex b = new Complex(2.2, 3.2);
+        String expected = a.toString();
+
+        Complex c = Complex.mul(a, b);
+        String result = a.toString();
+        assertEquals(expected, result);
     }
 
     @org.junit.Test
@@ -85,7 +106,7 @@ public class ComplexTest {
     public void toStringTest() {
         Complex a = new Complex(1.4414, -12.218);
         String expected = "1.4414-12.218i";
-        Assert.assertEquals(expected, a.toString());
+        assertEquals(expected, a.toString());
 
         Complex b = new Complex(-0.333333, +32.323323);
         String expected2 = "-0.333333+32.323323i";
@@ -97,10 +118,15 @@ public class ComplexTest {
     }
 
     @org.junit.Test
+    public void toStringTest2() {
+        Complex a = new Complex(1.4414, -12.218);
+    }
+
+    @org.junit.Test
     public void valueOf() {
         Complex b = Complex.valueOf("   99.09-666.777i   ");
         String result = b.toString();
         String expected = "99.09-666.777i";
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 }
