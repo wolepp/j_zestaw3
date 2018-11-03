@@ -1,3 +1,5 @@
+package complex;
+
 /**
  * Klasa do obsługi liczb zespolonych.
  *
