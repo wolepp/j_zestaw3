@@ -1,3 +1,4 @@
+import complex.ComplexTest;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -11,7 +12,7 @@ public class Tester {
             System.out.println(failure.toString());
         }
 
-        System.out.println(result.wasSuccessful());
+        System.out.println("Wynik testów: " + result.wasSuccessful());
     }
 
 }

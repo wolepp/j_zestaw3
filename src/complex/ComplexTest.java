@@ -16,7 +16,7 @@ public class ComplexTest {
         String numerycznyBlad = String.valueOf(-1.2 + 5.6);
         assertEquals(numerycznyBlad + "-4.4i", result);
 //        assertEquals("4.4-4.4i", result);
-//        -1.2 + 5.6 == 4.3999999999999995, stąd test jest fałszywie negatywny
+//        -1.2 + 5.6 == 4.3999999999999995, stąd test byłby fałszywie negatywny
     }
 
     @org.junit.Test
@@ -25,7 +25,18 @@ public class ComplexTest {
         Complex b = new Complex(5.6, -7.8);
         a.mul(b);
         String result = a.toString();
-        assert result.equals("19.8+28.4i");
+        //assert result.equals("19.8+28.4i");
+        assertEquals("19.8+28.4i", result);
+    }
+
+    @org.junit.Test
+    public void mulThenAdd() {
+        Complex a = new Complex(-1, -1);
+        Complex c = new Complex(2.5, 2.5);
+        a.mul(a).add(c);
+        String result = a.toString();
+        String expected = "2.5+4.5i";
+        assertEquals(expected, result);
     }
 
     @org.junit.Test
@@ -91,7 +102,7 @@ public class ComplexTest {
         Complex c = Complex.mul(a, b);
         String result = c.toString();
         String expected = "7.2466-9.7532i";
-        assert result.equals(expected);
+        assertEquals(expected, result);
     }
 
     @org.junit.Test
@@ -101,7 +112,7 @@ public class ComplexTest {
         Complex c = Complex.div(a, b);
         String result = c.toString();
         String expected = "4.0-4.0i";
-        assert result.equals(expected);
+        assertEquals(expected, result);
     }
 
     @org.junit.Test
